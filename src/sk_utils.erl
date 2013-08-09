@@ -34,9 +34,14 @@ start_worker(WorkFlow, NextPid) ->
   sk_assembler:make(WorkFlow, NextPid).
 
 -spec stop_workers(module(), [pid()]) -> 'eos'.
-stop_workers(_Mod, []) ->
-  eos;
-stop_workers(Mod, [Worker|Rest]) ->
-  sk_tracer:t(85, self(), Worker, {Mod, system}, [{msg, eos}]),
-  Worker ! {system, eos},
-  stop_workers(Mod, Rest).
+stop_workers( Mod, Workers) ->
+  lists:map( fun( Worker ) -> 
+                 sk_tracer:t(85, self(), Worker, {Mod, system}, [{msg, eos}]),
+                 stop_worker( Worker )
+             end,
+             Workers ),
+  eos.
+
+-spec stop_worker( pid()) -> {system, eos}.
+stop_worker( Worker ) ->
+  Worker ! {system, eos}.
