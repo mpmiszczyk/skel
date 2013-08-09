@@ -8,3 +8,4 @@ results
 .skel.plt
 .eunit/*
 *.*~
+/deps/meck/
