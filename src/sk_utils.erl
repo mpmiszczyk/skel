@@ -20,7 +20,7 @@
 
 -spec start_workers(pos_integer(), skel:workflow(), pid()) -> [pid()].
 start_workers(NWorkers, WorkFlow, NextPid) ->
-  start_workers(NWorkers, WorkFlow, NextPid, []).
+  start_workers(NWorkers, WorkFlow, NextPid, _Acc = []).
 
 -spec start_workers(pos_integer(), skel:workflow(), pid(), [pid()]) -> [pid()].
 start_workers(NWorkers,_WorkFlow,_NextPid, WorkerPids) when NWorkers < 1 ->
