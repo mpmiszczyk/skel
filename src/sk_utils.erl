@@ -11,6 +11,7 @@
          start_workers/3
         ,start_worker/2
         ,stop_workers/2
+        ,stop_worker/1
         ]).
 
 
@@ -37,7 +38,7 @@ start_worker(WorkFlow, NextPid) ->
 stop_workers( Mod, Workers) ->
   lists:map( fun( Worker ) -> 
                  sk_tracer:t(85, self(), Worker, {Mod, system}, [{msg, eos}]),
-                 stop_worker( Worker )
+                 ?MODULE:stop_worker( Worker )
              end,
              Workers ),
   eos.
