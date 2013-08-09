@@ -26,7 +26,7 @@ start_workers(NWorkers, WorkFlow, NextPid) ->
 start_workers(NWorkers,_WorkFlow,_NextPid, WorkerPids) when NWorkers < 1 ->
   WorkerPids;
 start_workers(NWorkers, WorkFlow, NextPid, WorkerPids) ->
-  NewWorker = start_worker(WorkFlow, NextPid),
+  NewWorker = ?MODULE:start_worker(WorkFlow, NextPid),
   start_workers(NWorkers-1, WorkFlow, NextPid, [NewWorker|WorkerPids]).
 
 -spec start_worker(skel:workflow(), pid()) -> pid().
